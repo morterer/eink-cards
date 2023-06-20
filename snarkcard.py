@@ -6,11 +6,11 @@ from string import ascii_letters
 
 # https://www.alpharithms.com/fit-custom-font-wrapped-text-image-python-pillow-552321/
 
-#480-x 234 Resolution
 
 # Load custom font
-font = ImageFont.truetype("Pillow/Tests/fonts/FreeMonoBold.ttf", 24)
-
+font = ImageFont.truetype("DejaVuSansCondensed.ttf", 14)
+# border = ImageFont.truetype("/home/eric/Downloads/There can only be one Beaver Im it.ttf", 32)
+# border = ImageFont.truetype("/home/eric/Downloads/sughayer Separates_03.ttf", 72)
 textFile = open('quotes.txt', 'r')
 lines = textFile.readlines()
 
@@ -18,10 +18,12 @@ lines = textFile.readlines()
 for index, text in enumerate(lines):
 
     # create an image
-    img = Image.open(fp='simple-background.jpg', mode='r')
-    img = img.resize((800,600))
+    img = Image.open(fp='featherbkgnd.jpg', mode='r')
+    # img = img.resize((296,128))
 
     # Create DrawText object
+    # draw = ImageDraw.Draw(im=img)
+    # img = Image.new('RGB', (296, 128), (255, 255, 255))
     draw = ImageDraw.Draw(im=img)
 
     avg_char_width = sum(font.getsize(char)[0]
@@ -29,10 +31,13 @@ for index, text in enumerate(lines):
 
     # wrap the words across lines, preserving explicit new-lines
     paragraphs = text.split('\\n')
-    text = "\n".join([textwrap.fill(text=p, width=int(img.size[0] * .7 / avg_char_width)) for p in paragraphs])
+    text = "\n".join([textwrap.fill(text=p, width=int(img.size[0] * 1.1 / avg_char_width)) for p in paragraphs])
 
-    # center test on the image
-    draw.text(xy=(img.size[0]/2, img.size[1]/2), text=text, font=font, fill='#ffffff', anchor='mm')
+    # draw.text(xy=(img.size[0]/2, -5), text='z', font=border, fill='#000000', anchor='mm')
+    # draw.text(xy=(img.size[0]/2, 100), text='y', font=border, fill='#000000', anchor='mm')
+    # center text on the image
+    draw.text(xy=(img.size[0]/2, img.size[1]/2), text=text, font=font, fill='#000000', anchor='mm')
 
-    filename = "output/snark-{}.jpg".format(str(index).zfill(3))
+    filename = "output/snark{}.bmp".format(str(index).zfill(3))
+    # filename = "featherbkgnd.jpg"
     img.save(filename)
