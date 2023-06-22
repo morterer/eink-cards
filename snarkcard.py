@@ -9,8 +9,7 @@ from string import ascii_letters
 
 # Load custom font
 font = ImageFont.truetype("DejaVuSansCondensed.ttf", 14)
-# border = ImageFont.truetype("/home/eric/Downloads/There can only be one Beaver Im it.ttf", 32)
-# border = ImageFont.truetype("/home/eric/Downloads/sughayer Separates_03.ttf", 72)
+
 textFile = open('quotes.txt', 'r')
 lines = textFile.readlines()
 
@@ -22,8 +21,6 @@ for index, text in enumerate(lines):
     # img = img.resize((296,128))
 
     # Create DrawText object
-    # draw = ImageDraw.Draw(im=img)
-    # img = Image.new('RGB', (296, 128), (255, 255, 255))
     draw = ImageDraw.Draw(im=img)
 
     avg_char_width = sum(font.getsize(char)[0]
@@ -33,11 +30,9 @@ for index, text in enumerate(lines):
     paragraphs = text.split('\\n')
     text = "\n".join([textwrap.fill(text=p, width=int(img.size[0] * 1.1 / avg_char_width)) for p in paragraphs])
 
-    # draw.text(xy=(img.size[0]/2, -5), text='z', font=border, fill='#000000', anchor='mm')
-    # draw.text(xy=(img.size[0]/2, 100), text='y', font=border, fill='#000000', anchor='mm')
     # center text on the image
     draw.text(xy=(img.size[0]/2, img.size[1]/2), text=text, font=font, fill='#000000', anchor='mm')
 
     filename = "output/snark{}.bmp".format(str(index).zfill(3))
-    # filename = "featherbkgnd.jpg"
+
     img.save(filename)
